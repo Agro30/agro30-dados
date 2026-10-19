@@ -71,7 +71,8 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; te
 .band .chg.up { color: #a8dc78; } .band .chg.down { color: #f2a08f; } .band .chg.flat { color: var(--band-muted); }
 
 /* seções */
-main { padding-block: 36px 48px; display: grid; gap: 44px; }
+main { padding-block: 36px 48px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; }
+main > section, .grid2 > *, .bol > * { min-width: 0; }
 .section-head { display: grid; gap: 6px; margin-bottom: 18px; }
 .section-head h2 { font-size: 1.9rem; }
 .section-head p { margin: 0; color: var(--muted); max-width: 65ch; }
