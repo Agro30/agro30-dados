@@ -1,0 +1,275 @@
+{
+ "painel": [
+  {
+   "indicador": "Soja",
+   "praca": "Paranaguá",
+   "valor": 154.61,
+   "unidade": "R$/sc",
+   "variacao_pct": 0.2,
+   "base": "vs 14/10",
+   "data": "2026-10-16",
+   "fonte": "Cepea/ESALQ"
+  },
+  {
+   "indicador": "Milho",
+   "praca": "Campinas",
+   "valor": 64.85,
+   "unidade": "R$/sc",
+   "variacao_pct": -0.9,
+   "base": "vs 14/10",
+   "data": "2026-10-16",
+   "fonte": "Cepea/ESALQ"
+  },
+  {
+   "indicador": "Algodão",
+   "praca": "Cepea",
+   "valor": 134.7,
+   "unidade": "R$/@",
+   "variacao_pct": 0.3,
+   "base": "vs 14/10",
+   "data": "2026-10-16",
+   "fonte": "Cepea/ESALQ"
+  },
+  {
+   "indicador": "Boi gordo",
+   "praca": "Cepea/B3",
+   "valor": 380.7,
+   "unidade": "R$/@",
+   "variacao_pct": 0.3,
+   "base": "vs 14/10",
+   "data": "2026-10-16",
+   "fonte": "Cepea/B3"
+  },
+  {
+   "indicador": "Café arábica",
+   "praca": "Cepea",
+   "valor": 1601.25,
+   "unidade": "R$/sc",
+   "variacao_pct": 1.9,
+   "base": "vs 14/10",
+   "data": "2026-10-16",
+   "fonte": "Cepea/ESALQ"
+  },
+  {
+   "indicador": "Dólar PTAX",
+   "praca": "venda",
+   "valor": 5.0826,
+   "unidade": "R$",
+   "variacao_pct": 1.7,
+   "base": "na semana",
+   "data": "2026-10-16",
+   "fonte": "Banco Central"
+  },
+  {
+   "indicador": "Soja Chicago",
+   "praca": "CBOT nov",
+   "valor": 12.61,
+   "unidade": "US$/bu",
+   "variacao_pct": -2.4,
+   "base": "na semana",
+   "data": "2026-10-16",
+   "fonte": "CBOT via Reuters"
+  },
+  {
+   "indicador": "Milho Chicago",
+   "praca": "CBOT dez",
+   "valor": 4.74,
+   "unidade": "US$/bu",
+   "variacao_pct": null,
+   "base": "",
+   "data": "2026-10-16",
+   "fonte": "CBOT via Reuters"
+  }
+ ],
+ "plantio": [
+  {
+   "local": "Mato Grosso",
+   "pct": 51.9,
+   "fonte": "Imea",
+   "data": "2026-10-16",
+   "nota": "+18,6 pontos na semana; Médio-Norte 69,3%, Oeste 61,6%"
+  },
+  {
+   "local": "Brasil (Safras)",
+   "pct": 29.5,
+   "fonte": "Safras & Mercado",
+   "data": "2026-10-16",
+   "nota": "Acima da média histórica"
+  },
+  {
+   "local": "Média histórica",
+   "pct": 27.0,
+   "fonte": "Safras & Mercado",
+   "data": "2026-10-16",
+   "nota": ""
+  },
+  {
+   "local": "Brasil (Conab)",
+   "pct": 15.6,
+   "fonte": "Conab",
+   "data": "2026-10-09",
+   "nota": "Último boletim semanal de progresso"
+  },
+  {
+   "local": "Goiás",
+   "pct": 10.0,
+   "fonte": "Conab",
+   "data": "2026-10-09",
+   "nota": "Perto de 10%, mais adiantado no Sul e Sudoeste"
+  },
+  {
+   "local": "Paraná e MS",
+   "pct": null,
+   "fonte": "Conab",
+   "data": "2026-10-09",
+   "nota": "Bom ritmo; chuvas pontuais limitaram máquinas em MS"
+  },
+  {
+   "local": "Santa Catarina",
+   "pct": null,
+   "fonte": "Conab",
+   "data": "2026-10-09",
+   "nota": "Excesso de umidade segue limitando"
+  },
+  {
+   "local": "MAPITOPA (PA e TO)",
+   "pct": null,
+   "fonte": "Conab",
+   "data": "2026-10-09",
+   "nota": "Plantio incipiente; chuva insuficiente para recarregar o solo"
+  }
+ ],
+ "conab": [
+  {
+   "cultura": "Grãos (total)",
+   "producao_mi_t": 367.1,
+   "variacao_pct": 1.4,
+   "area_mi_ha": null
+  },
+  {
+   "cultura": "Soja",
+   "producao_mi_t": 181.6,
+   "variacao_pct": 0.7,
+   "area_mi_ha": 49.3
+  },
+  {
+   "cultura": "Milho",
+   "producao_mi_t": 148.0,
+   "variacao_pct": 2.4,
+   "area_mi_ha": null
+  }
+ ],
+ "taxas": [
+  {
+   "indicador": "Selic",
+   "valor": 13.75,
+   "unidade": "% a.a.",
+   "referencia": "Próximo Copom: 3 e 4/11",
+   "fonte": "Banco Central"
+  },
+  {
+   "indicador": "IPCA 12 meses",
+   "valor": 4.58,
+   "unidade": "%",
+   "referencia": "Setembro; teto da meta 4,5%",
+   "fonte": "IBGE"
+  },
+  {
+   "indicador": "IPCA-15 12 meses (projeção)",
+   "valor": 4.8,
+   "unidade": "%",
+   "referencia": "Divulgação 23/10, 9h (Itaú)",
+   "fonte": "InfoMoney/AVNews"
+  },
+  {
+   "indicador": "Focus · IPCA 2026",
+   "valor": 5.22,
+   "unidade": "%",
+   "referencia": "Focus de 13/10",
+   "fonte": "Banco Central"
+  },
+  {
+   "indicador": "Focus · Selic fim de 2026",
+   "valor": 13.25,
+   "unidade": "% a.a.",
+   "referencia": "Focus de 13/10",
+   "fonte": "Banco Central"
+  },
+  {
+   "indicador": "Focus · Selic fim de 2027",
+   "valor": 12.0,
+   "unidade": "% a.a.",
+   "referencia": "Focus de 13/10",
+   "fonte": "Banco Central"
+  },
+  {
+   "indicador": "Focus · Dólar fim de 2026",
+   "valor": 5.15,
+   "unidade": "R$",
+   "referencia": "Focus de 13/10",
+   "fonte": "Banco Central"
+  },
+  {
+   "indicador": "Focus · PIB 2026",
+   "valor": 1.85,
+   "unidade": "%",
+   "referencia": "Focus de 13/10",
+   "fonte": "Banco Central"
+  },
+  {
+   "indicador": "Pronamp",
+   "valor": 9.0,
+   "unidade": "% a.a. (até)",
+   "referencia": "Plano Safra 2026/27",
+   "fonte": "MAPA"
+  },
+  {
+   "indicador": "Custeio empresarial",
+   "valor": 12.5,
+   "unidade": "% a.a.",
+   "referencia": "Plano Safra 2026/27",
+   "fonte": "MAPA"
+  }
+ ],
+ "resumo": [
+  {
+   "ordem": 1,
+   "titulo": "Mato Grosso passa da metade do plantio",
+   "texto": "Com a chuva no Centro-Oeste, MT chegou a 51,9% da soja semeada; o Brasil está em 29,5%, acima da média. No Pará e no Tocantins o plantio ainda é incipiente."
+  },
+  {
+   "ordem": 2,
+   "titulo": "Chicago cai, dólar segura a soja",
+   "texto": "Cinco quedas seguidas em Chicago pela safra recorde dos EUA, compensadas pela alta do dólar; a saca em Paranaguá ficou estável."
+  },
+  {
+   "ordem": 3,
+   "titulo": "Semana de eleição e IPCA-15",
+   "texto": "PTAX em R$ 5,08 antes do segundo turno; o IPCA-15 de sexta pode levar a inflação em 12 meses para perto de 4,8%."
+  },
+  {
+   "ordem": 4,
+   "titulo": "Boi no recorde, café em alta",
+   "texto": "Arroba no maior valor nominal desde 1994 e café arábica subindo com estoques baixos e receio do El Niño."
+  }
+ ],
+ "agenda": [
+  {
+   "data": "2026-10-23",
+   "evento": "IPCA-15 de outubro (IBGE, 9h)"
+  },
+  {
+   "data": "2026-10-25",
+   "evento": "Segundo turno das eleições"
+  },
+  {
+   "data": "2026-11-03",
+   "evento": "Copom (3 e 4/11)"
+  },
+  {
+   "data": "2026-11-12",
+   "evento": "Conab: 2º levantamento da safra 2026/27 (data a confirmar)"
+  }
+ ],
+ "atualizado": "19/10/2026 13:15"
+}
