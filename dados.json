@@ -53,32 +53,32 @@
   {
    "indicador": "Dólar PTAX",
    "praca": "venda",
-   "valor": 5.0826,
+   "valor": 5.0564,
    "unidade": "R$",
-   "variacao_pct": 1.7,
-   "base": "na semana",
-   "data": "2026-10-16",
+   "variacao_pct": -0.5,
+   "base": "vs 16/10",
+   "data": "2026-10-19",
    "fonte": "Banco Central"
   },
   {
    "indicador": "Soja Chicago",
    "praca": "CBOT nov",
-   "valor": 12.61,
+   "valor": 12.54,
    "unidade": "US$/bu",
-   "variacao_pct": -2.4,
-   "base": "na semana",
-   "data": "2026-10-16",
-   "fonte": "CBOT via Reuters"
+   "variacao_pct": -0.6,
+   "base": "vs 16/10",
+   "data": "2026-10-19",
+   "fonte": "CBOT via Notícias Agrícolas"
   },
   {
    "indicador": "Milho Chicago",
    "praca": "CBOT dez",
-   "valor": 4.74,
+   "valor": 4.67,
    "unidade": "US$/bu",
-   "variacao_pct": null,
-   "base": "",
-   "data": "2026-10-16",
-   "fonte": "CBOT via Reuters"
+   "variacao_pct": -1.5,
+   "base": "vs 16/10",
+   "data": "2026-10-19",
+   "fonte": "CBOT via Safras & Mercado"
   }
  ],
  "plantio": [
@@ -185,35 +185,35 @@
    "indicador": "Focus · IPCA 2026",
    "valor": 5.22,
    "unidade": "%",
-   "referencia": "Focus de 13/10",
+   "referencia": "Focus de 19/10",
    "fonte": "Banco Central"
   },
   {
    "indicador": "Focus · Selic fim de 2026",
    "valor": 13.25,
    "unidade": "% a.a.",
-   "referencia": "Focus de 13/10",
+   "referencia": "Focus de 19/10",
    "fonte": "Banco Central"
   },
   {
    "indicador": "Focus · Selic fim de 2027",
    "valor": 12.0,
    "unidade": "% a.a.",
-   "referencia": "Focus de 13/10",
+   "referencia": "Focus de 19/10",
    "fonte": "Banco Central"
   },
   {
    "indicador": "Focus · Dólar fim de 2026",
-   "valor": 5.15,
+   "valor": 5.13,
    "unidade": "R$",
-   "referencia": "Focus de 13/10",
+   "referencia": "Focus de 19/10",
    "fonte": "Banco Central"
   },
   {
    "indicador": "Focus · PIB 2026",
-   "valor": 1.85,
+   "valor": 1.83,
    "unidade": "%",
-   "referencia": "Focus de 13/10",
+   "referencia": "Focus de 19/10",
    "fonte": "Banco Central"
   },
   {
@@ -234,23 +234,23 @@
  "resumo": [
   {
    "ordem": 1,
-   "titulo": "Mato Grosso passa da metade do plantio",
-   "texto": "Com a chuva no Centro-Oeste, MT chegou a 51,9% da soja semeada; o Brasil está em 29,5%, acima da média. No Pará e no Tocantins o plantio ainda é incipiente."
+   "titulo": "Chicago e dólar recuam juntos",
+   "texto": "Soja em Chicago caiu de novo (US$ 12,54/bu, -0,6%) e o milho perdeu 1,5% com o avanço da colheita nos EUA; a PTAX cedeu para R$ 5,06, o que tira sustentação dos preços internos. O Cepea desta segunda ainda não saiu."
   },
   {
    "ordem": 2,
-   "titulo": "Chicago cai, dólar segura a soja",
-   "texto": "Cinco quedas seguidas em Chicago pela safra recorde dos EUA, compensadas pela alta do dólar; a saca em Paranaguá ficou estável."
+   "titulo": "Plantio: MT à frente, Sul travado",
+   "texto": "Mato Grosso já semeou mais da metade da soja, enquanto a chuva excessiva quase parou as máquinas no Paraná. No MAPITOPA, Pará e Tocantins seguem com plantio incipiente à espera de umidade no solo."
   },
   {
    "ordem": 3,
-   "titulo": "Semana de eleição e IPCA-15",
-   "texto": "PTAX em R$ 5,08 antes do segundo turno; o IPCA-15 de sexta pode levar a inflação em 12 meses para perto de 4,8%."
+   "titulo": "El Niño forte no radar",
+   "texto": "O painel do Inmet e órgãos federais vê alta chance de El Niño muito forte até dezembro: menos chuva e calor no centro-norte e no MAPITOPA, excesso de água no Sul. Vale escalonar a semeadura onde o solo ainda está seco."
   },
   {
    "ordem": 4,
-   "titulo": "Boi no recorde, café em alta",
-   "texto": "Arroba no maior valor nominal desde 1994 e café arábica subindo com estoques baixos e receio do El Niño."
+   "titulo": "Focus estável antes da eleição",
+   "texto": "O Focus manteve IPCA de 2026 em 5,22% e Selic de 13,25% no fim do ano, mas cortou o PIB para 1,83% e o dólar para R$ 5,13. A semana tem IPCA-15 na sexta e segundo turno no domingo."
   }
  ],
  "agenda": [
@@ -263,13 +263,17 @@
    "evento": "Segundo turno das eleições"
   },
   {
+   "data": "2026-10-26",
+   "evento": "Boletim Focus (8h25)"
+  },
+  {
    "data": "2026-11-03",
    "evento": "Copom (3 e 4/11)"
   },
   {
    "data": "2026-11-12",
-   "evento": "Conab: 2º levantamento da safra 2026/27 (data a confirmar)"
+   "evento": "Conab: 2º levantamento da safra 2026/27 (data a confirmar) · NOAA: boletim do El Niño"
   }
  ],
- "atualizado": "19/10/2026 13:15"
+ "atualizado": "19/10/2026 18:57"
 }
