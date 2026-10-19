@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Agro30: mercado agro, cotações, Status Agro, produção, clima e o Boletim Agro &amp; Macro semanal.">
+<title>Agro30 Mercado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: faixa de cabeçalho verde-escura com o boletim do dia; abaixo, seções em grade de duas colunas que viram uma no celular */
+:root {
+  --bg: #f6f7f2;
+  --surface: #ffffff;
+  --ink: #23271f;
+  --muted: #5d6656;
+  --line: #dde1d4;
+  --brand: #4e7d0a;
+  --brand-deep: #2f3437;
+  --brand-tint: #e8f0da;
+  --up: #2f7a1f;
+  --down: #b0412e;
+  --on-band: #f2f5ec;
+  --band-muted: #b9c4ad;
+  --display: "Barlow Semi Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Source Sans 3", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141712; --surface: #1c2019; --ink: #e7eadf; --muted: #a3ab97; --line: #2f352a;
+    --brand: #8fbf3f; --brand-deep: #0f1210; --brand-tint: #26311a; --up: #86c46a; --down: #e8826e;
+    --on-band: #eef2e6; --band-muted: #9aa58d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141712; --surface: #1c2019; --ink: #e7eadf; --muted: #a3ab97; --line: #2f352a;
+  --brand: #8fbf3f; --brand-deep: #0f1210; --brand-tint: #26311a; --up: #86c46a; --down: #e8826e;
+  --on-band: #eef2e6; --band-muted: #9aa58d; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 1rem; line-height: 1.5; }
+.wrap { max-width: 72rem; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--brand); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; text-wrap: balance; margin: 0; }
+.label { font-family: var(--display); font-weight: 600; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.num { font-family: var(--display); font-variant-numeric: tabular-nums; }
+
+/* cabeçalho */
+.band { background: var(--brand-deep); color: var(--on-band); }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 16px; flex-wrap: wrap; }
+.brand { display: flex; align-items: baseline; gap: 2px; text-decoration: none; color: var(--on-band); font-family: var(--display); font-weight: 700; font-size: 1.75rem; letter-spacing: -.01em; }
+.brand b { color: #9cc94a; font-weight: 700; }
+.links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; font-size: .95rem; }
+.links a { color: var(--on-band); text-decoration: none; opacity: .85; }
+.links a:hover { opacity: 1; text-decoration: underline; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: #9cc94a; color: #1b2111 !important; opacity: 1 !important; font-weight: 600; padding: 8px 14px; border-radius: 6px; text-decoration: none !important; }
+.hero { padding-block: 28px 36px; display: grid; gap: 24px; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.25rem); max-width: 22ch; }
+.hero .sub { color: var(--band-muted); max-width: 60ch; margin: 0; }
+.stamp { display: inline-flex; gap: 12px; flex-wrap: wrap; font-size: .9rem; color: var(--band-muted); }
+.stamp strong { color: var(--on-band); font-weight: 600; }
+.board { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr)); border-top: 1px solid rgba(255,255,255,.14); }
+.quote { padding: 16px 16px 16px 0; border-bottom: 1px solid rgba(255,255,255,.14); display: grid; gap: 2px; min-width: 0; }
+.quote .name { font-family: var(--display); font-weight: 600; font-size: 1rem; }
+.quote .where { font-size: .8rem; color: var(--band-muted); }
+.quote .val { font-size: 2.1rem; font-weight: 600; line-height: 1.05; margin-top: 6px; }
+.quote .unit { font-size: .85rem; color: var(--band-muted); font-family: var(--body); margin-left: 4px; }
+.chg { font-size: .85rem; font-variant-numeric: tabular-nums; }
+.band .chg.up { color: #a8dc78; } .band .chg.down { color: #f2a08f; } .band .chg.flat { color: var(--band-muted); }
+
+/* seções */
+main { padding-block: 36px 48px; display: grid; gap: 44px; }
+.section-head { display: grid; gap: 6px; margin-bottom: 18px; }
+.section-head h2 { font-size: 1.9rem; }
+.section-head p { margin: 0; color: var(--muted); max-width: 65ch; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 24px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; min-width: 0; }
+.panel h3 { font-size: 1.2rem; margin-bottom: 4px; }
+.panel .note { color: var(--muted); font-size: .85rem; margin: 0 0 14px; }
+
+.bars { display: grid; gap: 12px; }
+.bar-row { display: grid; grid-template-columns: minmax(7rem, 9.5rem) 1fr 3.4rem; align-items: center; gap: 10px; font-size: .92rem; }
+.track { height: 14px; background: var(--brand-tint); border-radius: 7px; overflow: hidden; }
+.fill { height: 100%; background: var(--brand); border-radius: 7px; }
+.fill.ref { background: var(--muted); opacity: .55; }
+.bar-row .num { text-align: right; font-weight: 600; font-size: 1.05rem; }
+.bar-row small { display: block; color: var(--muted); font-size: .75rem; }
+
+.regions { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.regions li { display: grid; gap: 2px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.regions li:last-child { border-bottom: 0; padding-bottom: 0; }
+.regions .tag { font-family: var(--display); font-weight: 600; }
+.regions .focus .tag::after { content: "foco regional"; margin-left: 8px; font-family: var(--body); font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--brand); background: var(--brand-tint); padding: 1px 6px; border-radius: 4px; vertical-align: 2px; }
+.regions span { color: var(--muted); font-size: .9rem; }
+
+.scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th { text-align: left; font-family: var(--display); font-weight: 600; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 0 12px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.v { font-family: var(--display); font-weight: 600; font-size: 1.1rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.src { color: var(--muted); font-size: .82rem; }
+
+.rates { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.rate { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--line); display: grid; gap: 2px; min-width: 0; }
+.rate .num { font-size: 1.9rem; font-weight: 600; line-height: 1.05; }
+.rate .num small { font-size: .9rem; font-family: var(--body); color: var(--muted); font-weight: 400; margin-left: 3px; }
+.rate .ref { color: var(--muted); font-size: .8rem; }
+
+.agenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.agenda li { display: grid; grid-template-columns: 4.5rem 1fr; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.agenda li:last-child { border-bottom: 0; }
+.agenda .d { font-family: var(--display); font-weight: 700; font-size: 1.25rem; color: var(--brand); font-variant-numeric: tabular-nums; }
+.agenda .d small { display: block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+.news { display: grid; gap: 18px; }
+.news article { display: grid; gap: 4px; }
+.news h3 { font-size: 1.15rem; }
+.news p { margin: 0; color: var(--muted); max-width: 65ch; }
+
+.access { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 24px; align-items: center; background: var(--brand-tint); border-radius: 8px; padding: 28px; }
+.access p { margin: 6px 0 0; color: var(--muted); max-width: 55ch; }
+.access ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.access .btn { background: var(--brand); color: #fff !important; }
+@media (max-width: 760px) { .access .btn { justify-self: start !important; } }
+
+.bol { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); gap: 28px; align-items: start; }
+@media (max-width: 860px) { .bol { grid-template-columns: minmax(0, 1fr); } }
+.bol-main { display: grid; gap: 24px; min-width: 0; }
+.bol-side { display: grid; gap: 18px; min-width: 0; }
+.bol-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 22px 28px; }
+.bol-summary article { display: grid; gap: 6px; border-top: 3px solid var(--brand); padding-top: 12px; }
+.bol-summary h3 { font-size: 1.3rem; }
+.bol-summary p { margin: 0; color: var(--ink); }
+.bol-quote { margin: 0; padding: 18px 22px; background: var(--brand-tint); border-radius: 8px; }
+.bol-quote p { margin: 0; font-family: var(--display); font-weight: 500; font-size: clamp(1.2rem, 2.4vw, 1.5rem); line-height: 1.3; max-width: 52ch; }
+.risks td:first-child { font-weight: 600; min-width: 12rem; }
+.risks td:last-child { min-width: 16rem; color: var(--muted); }
+.lvl { display: inline-block; font-family: var(--display); font-weight: 600; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+.lvl.hi { background: var(--down); color: var(--surface); }
+.lvl.md { background: var(--brand-tint); color: var(--ink); box-shadow: inset 0 0 0 1px var(--down); }
+.lvl.lo { background: var(--brand-tint); color: var(--muted); }
+.check { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.check li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; align-items: start; }
+.check li::before { content: ""; width: 14px; height: 14px; margin-top: 4px; border: 2px solid var(--brand); border-radius: 3px; }
+.author { display: grid; grid-template-columns: 52px 1fr; gap: 14px; }
+.author .mono { width: 52px; height: 52px; border-radius: 50%; background: var(--brand); color: var(--surface); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 1.2rem; }
+.author p { margin: 6px 0 0; color: var(--muted); font-size: .9rem; }
+.author .said { color: var(--ink); font-style: italic; }
+.editions { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.editions li { display: grid; gap: 2px; }
+.editions a { font-weight: 600; }
+.editions span { color: var(--muted); font-size: .8rem; }
+
+:root { --s1: #4e7d0a; --s2: #c27c0e; --s3: #2f6f9f; --s4: #9a4d8e; --s5: #b0412e; --s6: #1f8a7a; --nino: #b0412e; --nina: #2f6f9f; --neutro: #a3ab97; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --s1: #8fbf3f; --s2: #e3a440; --s3: #6aa8d8; --s4: #c98abf; --s5: #e8826e; --s6: #4fc2ae; --nino: #e8826e; --nina: #6aa8d8; --neutro: #6c7462; } }
+:root[data-theme="dark"] { --s1: #8fbf3f; --s2: #e3a440; --s3: #6aa8d8; --s4: #c98abf; --s5: #e8826e; --s6: #4fc2ae; --nino: #e8826e; --nina: #6aa8d8; --neutro: #6c7462; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-bottom: 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: .88rem; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 5px 11px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: var(--surface); font-weight: 600; }
+.chart { width: 100%; max-width: 100%; height: auto; display: block; }
+.panel > * { min-width: 0; }
+body { overflow-x: clip; }
+.chart text { fill: var(--muted); font-size: 12px; font-family: var(--body); }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .zero { stroke: var(--muted); stroke-width: 1; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; font-size: .88rem; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 3px; border-radius: 2px; background: var(--c); margin-right: 6px; vertical-align: middle; }
+.legend .focus { font-weight: 600; }
+.tip { font-size: .8rem; color: var(--muted); margin: 8px 0 0; }
+.enso-tag { display: inline-block; font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; color: var(--surface); }
+.enso-tag.nino { background: var(--nino); } .enso-tag.nina { background: var(--nina); } .enso-tag.neutro { background: var(--neutro); color: var(--ink); }
+td.pos { color: var(--up); font-weight: 600; } td.neg { color: var(--down); font-weight: 600; }
+.prospect { display: grid; gap: 10px; margin: 0; padding-left: 18px; }
+
+footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var(--muted); font-size: .85rem; display: grid; gap: 10px; }
+footer .fine { font-size: .72rem; opacity: .85; }
+@media (max-width: 480px) { .bar-row { grid-template-columns: 6.5rem 1fr 3rem; } .quote .val { font-size: 1.8rem; } }
+@media (prefers-reduced-motion: no-preference) { .fill { transition: width .6s ease-out; } }
+</style>
+<style>html{-webkit-text-size-adjust:100%} body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div class="band">
+  <div class="wrap">
+    <nav class="nav" aria-label="Principal">
+      <a class="brand" href="#topo" id="topo">Agro<b>30</b></a>
+      <div class="links">
+        <a href="#boletim">Boletim</a>
+        <a href="#cotacoes">Cotações</a>
+        <a href="#status-agro">Status Agro</a>
+        <a href="#producao">Produção</a>
+        <a href="#clima">Clima</a>
+        <a href="#juros">Juros e crédito</a>
+        <a href="#agenda">Agenda</a>
+        <a class="btn" href="#acesso-interno">Acesso interno</a>
+      </div>
+    </nav>
+    <section class="hero" aria-labelledby="hero-title">
+      <div style="display:grid;gap:10px">
+        <span class="label" style="color:var(--band-muted)">Mercado agro hoje</span>
+        <h1 id="hero-title">—</h1>
+        <p class="sub" id="hero-sub"></p>
+        <div class="stamp"><span>Cotações de fechamento de <strong id="ref-date">—</strong></span><span>Atualizado em <strong id="upd">—</strong></span></div>
+      </div>
+      <div class="board" id="board" aria-label="Painel de cotações"></div>
+    </section>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="boletim" aria-labelledby="bol-title">
+    <div class="section-head"><span class="label">Boletim Agro &amp; Macro · Edição nº 3</span><h2 id="bol-title">Semana de 19 a 23 de outubro de 2026</h2><p>Análise semanal do agronegócio brasileiro, publicada toda segunda-feira. Dados até 16/10/2026.</p></div>
+    <div class="bol">
+      <div class="bol-main">
+        <div class="bol-summary">
+          <article><h3>Mato Grosso passa da metade</h3><p>A chuva chegou ao Centro-Oeste e o plantio da soja deu um salto. Em Mato Grosso, a semeadura avançou 18,6 pontos em uma semana e chegou a 51,9% da área na sexta (16/10), segundo o Imea. No Brasil, a Safras &amp; Mercado estima 29,5% plantados, acima da média histórica de 27%. No Pará e no Tocantins, porém, o plantio ainda era incipiente no último boletim da Conab.</p></article>
+          <article><h3>Chicago cai, dólar segura a soja</h3><p>A soja em Chicago teve cinco quedas seguidas e fechou a semana no menor nível em sete semanas (US$ 12,61 por bushel, −2,4%), pressionada pela colheita recorde nos EUA. A alta de 1,7% do dólar na semana compensou, e a saca em Paranaguá ficou estável em R$ 154,61, com poucos negócios.</p></article>
+          <article><h3>Semana de eleição e de IPCA-15</h3><p>O dólar voltou a subir e a PTAX fechou a sexta em R$ 5,08. Esta é a última semana antes do segundo turno (25/10). Na sexta (23), o IBGE divulga o IPCA-15 de outubro: o Itaú projeta 0,51% no mês e alta do acumulado em 12 meses para cerca de 4,8%.</p></article>
+          <article><h3>Boi no recorde, café em alta</h3><p>A arroba chegou a R$ 380,70, maior valor nominal desde 1994, e a B3 já negocia novembro perto de R$ 398. O café arábica subiu para R$ 1.601 por saca com estoques baixos em Nova York e receio com o El Niño.</p></article>
+        </div>
+        <blockquote class="bol-quote"><p>A janela abriu no Centro-Oeste. Quem planta agora deve aproveitar a umidade sem esquecer que o El Niño ainda pode cortar a chuva em novembro.</p></blockquote>
+        <div class="panel">
+          <h3>O mapa de riscos da semana</h3><p class="note">O que mudou desde a última edição e o que fazer agora. ▲ risco aumentou desde a Edição nº 2.</p>
+          <div class="scroll"><table class="risks">
+            <thead><tr><th>Risco</th><th>Nível</th><th>O que fazer</th></tr></thead>
+            <tbody>
+              <tr><td>El Niño muito forte no Centro-Norte, MAPITOPA e oeste da Bahia</td><td><span class="lvl hi">Alto</span></td><td>Plantar só com umidade no perfil, seguir o ZARC, escalonar áreas e contratar seguro ou Proagro antes de semear.</td></tr>
+              <tr><td>Câmbio volátil na semana do segundo turno</td><td><span class="lvl md">Médio ▲</span></td><td>Aproveitar altas do dólar para travar parte da venda; evitar decisões grandes concentradas em um único dia.</td></tr>
+              <tr><td>Chicago pressionada pela safra recorde dos EUA</td><td><span class="lvl md">Médio ▲</span></td><td>Prêmios podem cair até janeiro. Escalonar a venda da soja velha e da nova.</td></tr>
+              <tr><td>Inflação acima do teto e juros altos</td><td><span class="lvl md">Médio ▲</span></td><td>IPCA-15 de sexta pode subir para 4,8%. Priorizar linhas do Plano Safra e regularizar o CAR.</td></tr>
+              <tr><td>Excesso de chuva e doenças no Sul</td><td><span class="lvl md">Médio</span></td><td>Manejo preventivo desde a emergência; atenção ao encharcamento em Santa Catarina.</td></tr>
+              <tr><td>Diesel e nitrogênio caros</td><td><span class="lvl lo">Moderado ▲</span></td><td>Diesel subiu mais de 5% em outubro. Planejar operações e acompanhar o petróleo antes de comprar ureia para 2027.</td></tr>
+              <tr><td>Pecuária: reposição cara</td><td><span class="lvl lo">Moderado</span></td><td>Com a B3 perto de R$ 398/@, avaliar hedge de parte da produção.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+      <aside class="bol-side">
+        <div class="panel">
+          <h3>Checklist do produtor</h3>
+          <ul class="check">
+            <li>Plantar só com umidade no perfil</li>
+            <li>Seguro ou Proagro antes do plantio</li>
+            <li>Venda e câmbio travados em partes</li>
+            <li>Cotar KCl da safrinha com preço em queda</li>
+            <li>Monitorar doenças desde a emergência</li>
+            <li>CAR regularizado para juros menores</li>
+          </ul>
+        </div>
+        <div class="panel author">
+          <div class="mono" aria-hidden="true">BV</div>
+          <div>
+            <span class="label">Escrito por</span>
+            <h3>Bianca Valentin</h3>
+            <p>Engenheira agrônoma (UFLA), pós em Proteção de Plantas (UFV), Solos e Nutrição de Plantas (Esalq) e Economia no Agronegócio (UNEMAT). Integra o Time de Operações da Agro30.</p>
+            <p class="said">“Semana de eleição não é hora de apostar no câmbio. Vender em partes protege a margem, ganhe quem ganhar.”</p>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Edições</h3>
+          <ul class="editions">
+            <li><a href="boletim-agro-macro-ed3.pdf" target="_blank" rel="noopener">Edição nº 3 · 19 a 23/10/2026</a><span>PDF, 8 páginas</span></li>
+          </ul>
+          <p class="note" style="margin:10px 0 0">Nova edição toda segunda-feira.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="cotacoes">
+    <div class="section-head"><span class="label">Cotações</span><h2>Indicadores físicos e câmbio</h2><p>Preço à vista nas principais praças, com a variação sobre a cotação anterior. Saca de 60 kg; arroba de 15 kg.</p></div>
+    <div class="panel"><div class="scroll"><table>
+      <thead><tr><th>Produto</th><th>Praça</th><th>Preço</th><th>Variação</th><th>Data</th><th>Fonte</th></tr></thead>
+      <tbody id="quotes-table"></tbody>
+    </table></div></div>
+  </section>
+
+  <section id="status-agro">
+    <div class="section-head"><span class="label">Safra 2026/27</span><h2>Status Agro</h2><p>Andamento da safra do plantio à colheita, pelo último levantamento de cada fonte, e a situação por região. Nesta fase: plantio da soja.</p></div>
+    <div class="grid2">
+      <div class="panel"><h3>Área semeada</h3><p class="note">Percentual da área prevista</p><div class="bars" id="bars"></div></div>
+      <div class="panel"><h3>Situação por região</h3><p class="note">Resumo dos boletins da semana</p><ul class="regions" id="regions"></ul></div>
+    </div>
+    <div class="panel" style="margin-top:24px"><h3>Estimativa da Conab</h3><p class="note">Levantamento mais recente da safra 2026/27; variação sobre a safra anterior</p><div class="scroll"><table>
+      <thead><tr><th>Cultura</th><th>Produção</th><th>Variação</th><th>Área</th></tr></thead><tbody id="conab"></tbody></table></div></div>
+  </section>
+
+  <section id="juros">
+    <div class="section-head"><span class="label">Juros e crédito</span><h2>Taxas que pesam no custeio</h2><p>Juros básicos, inflação, projeções do mercado e as taxas controladas do Plano Safra.</p></div>
+    <div class="panel"><div class="rates" id="rates"></div></div>
+  </section>
+
+
+  <section id="producao">
+    <div class="section-head"><span class="label">Histórico de produção</span><h2>Produção por região, de 2015 a 2025</h2><p>Safras colhidas de cada ano, pela Produção Agrícola Municipal do IBGE. O MAPITOPA soma Maranhão, Tocantins, Piauí e Pará.</p></div>
+    <div class="panel">
+      <div class="controls">
+        <div class="chips" id="prod-cultura" role="group" aria-label="Cultura"></div>
+      </div>
+      <div class="controls">
+        <div class="chips" id="prod-metrica" role="group" aria-label="Medida"></div>
+      </div>
+      <h3 id="prod-titulo">—</h3>
+      <p class="note" id="prod-nota"></p>
+      <div id="prod-chart" style="min-height:300px"></div>
+      <div class="legend" id="prod-legenda"></div>
+      <p class="tip">Fonte: IBGE, PAM, tabela 1612. O ano é o da colheita: 2016 corresponde à safra 2015/16.</p>
+    </div>
+    <div class="panel" style="margin-top:24px">
+      <h3 id="tab-titulo">—</h3><p class="note">Último ano disponível e variação sobre o ano anterior</p>
+      <div class="scroll"><table><thead><tr><th>Região</th><th>Produção</th><th>Área</th><th>Produtividade</th><th>Variação da produção</th></tr></thead><tbody id="prod-tabela"></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="clima">
+    <div class="section-head"><span class="label">Clima e safra</span><h2>El Niño, La Niña e a produtividade</h2><p>Como o fenômeno se comportou nas últimas safras, o efeito médio em cada região e o que se espera para 2026/27.</p></div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Intensidade do fenômeno em cada safra</h3><p class="note">Índice ONI de novembro a janeiro. Acima de +0,5: El Niño; abaixo de −0,5: La Niña.</p>
+        <div id="oni-chart" style="min-height:260px"></div>
+        <div class="legend"><span style="--c:var(--nino)">El Niño</span><span style="--c:var(--nina)">La Niña</span><span style="--c:var(--neutro)">Neutro</span></div>
+        <p class="tip">Fonte: NOAA/CPC, Oceanic Niño Index.</p>
+      </div>
+      <div class="panel">
+        <h3>2026: o El Niño ganhando força</h3><p class="note">ONI por trimestre móvel de 2026 até julho a setembro</p>
+        <div id="oni26-chart" style="min-height:260px"></div>
+        <p class="tip">Fonte: NOAA/CPC.</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:24px">
+      <div class="panel">
+        <h3>Efeito médio na produtividade</h3><p class="note">Desvio em relação à tendência, de 2000 a 2025</p>
+        <div class="scroll"><table><thead><tr><th>Região</th><th>Soja · El Niño</th><th>Soja · La Niña</th><th>Milho · El Niño</th><th>Milho · La Niña</th></tr></thead><tbody id="desvio"></tbody></table></div>
+        <p class="tip">Fonte: Boletim Agro &amp; Macro nº 3, com dados do IBGE/PAM e da NOAA.</p>
+      </div>
+      <div class="panel">
+        <h3>Prospecção para a safra 2026/27</h3><p class="note" id="prosp-nota"></p>
+        <ul class="prospect" id="prosp"></ul>
+        <h3 style="margin-top:16px;font-size:1.05rem">O que fazer</h3>
+        <ul class="check" id="prosp-rec"></ul>
+        <p class="tip" id="prosp-fonte"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="agenda">
+    <div class="grid2">
+      <div><div class="section-head"><span class="label">Agenda</span><h2>Próximas divulgações</h2></div><div class="panel"><ul class="agenda" id="agenda-list"></ul></div></div>
+      <div><div class="section-head"><span class="label">Destaques</span><h2>O que mexeu com o agro</h2></div><div class="panel news" id="news"></div></div>
+    </div>
+  </section>
+
+  <section id="acesso-interno">
+    <div class="access">
+      <div>
+        <span class="label">Acesso interno</span>
+        <h2 style="font-size:1.7rem;margin-top:4px">Time de Operações</h2>
+        <p>Área restrita, com login da conta Microsoft da Agro30.</p>
+      </div>
+      <a class="btn" href="https://www.office.com" target="_blank" rel="noopener" style="justify-self:end">Entrar</a>
+    </div>
+  </section>
+</main>
+
+<div class="wrap">
+  <footer>
+    <div><strong style="color:var(--ink)">Fontes:</strong> Banco Central do Brasil (PTAX, Selic, Focus), IBGE (IPCA), Cepea/ESALQ (indicadores de preço), Imea, Safras &amp; Mercado e Conab (safra), MAPA (Plano Safra). Conteúdo informativo; não constitui recomendação de compra, venda ou investimento.</div>
+    <div>© 2026 Agro30</div>
+    <div class="fine">Conteúdo e desenvolvimento: Agro Valentin · inteligência agronômica e de mercado</div>
+  </footer>
+</div>
+
+<script>
+const EMBUTIDO = {"painel": [{"indicador": "Soja", "praca": "Paranaguá", "valor": 154.61, "unidade": "R$/sc", "variacao_pct": 0.2, "base": "vs 14/10", "data": "2026-10-16", "fonte": "Cepea/ESALQ"}, {"indicador": "Milho", "praca": "Campinas", "valor": 64.85, "unidade": "R$/sc", "variacao_pct": -0.9, "base": "vs 14/10", "data": "2026-10-16", "fonte": "Cepea/ESALQ"}, {"indicador": "Algodão", "praca": "Cepea", "valor": 134.7, "unidade": "R$/@", "variacao_pct": 0.3, "base": "vs 14/10", "data": "2026-10-16", "fonte": "Cepea/ESALQ"}, {"indicador": "Boi gordo", "praca": "Cepea/B3", "valor": 380.7, "unidade": "R$/@", "variacao_pct": 0.3, "base": "vs 14/10", "data": "2026-10-16", "fonte": "Cepea/B3"}, {"indicador": "Café arábica", "praca": "Cepea", "valor": 1601.25, "unidade": "R$/sc", "variacao_pct": 1.9, "base": "vs 14/10", "data": "2026-10-16", "fonte": "Cepea/ESALQ"}, {"indicador": "Dólar PTAX", "praca": "venda", "valor": 5.0826, "unidade": "R$", "variacao_pct": 1.7, "base": "na semana", "data": "2026-10-16", "fonte": "Banco Central"}, {"indicador": "Soja Chicago", "praca": "CBOT nov", "valor": 12.61, "unidade": "US$/bu", "variacao_pct": -2.4, "base": "na semana", "data": "2026-10-16", "fonte": "CBOT via Reuters"}, {"indicador": "Milho Chicago", "praca": "CBOT dez", "valor": 4.74, "unidade": "US$/bu", "variacao_pct": null, "base": "", "data": "2026-10-16", "fonte": "CBOT via Reuters"}], "plantio": [{"local": "Mato Grosso", "pct": 51.9, "fonte": "Imea", "data": "2026-10-16", "nota": "+18,6 pontos na semana; Médio-Norte 69,3%, Oeste 61,6%"}, {"local": "Brasil (Safras)", "pct": 29.5, "fonte": "Safras & Mercado", "data": "2026-10-16", "nota": "Acima da média histórica"}, {"local": "Média histórica", "pct": 27.0, "fonte": "Safras & Mercado", "data": "2026-10-16", "nota": ""}, {"local": "Brasil (Conab)", "pct": 15.6, "fonte": "Conab", "data": "2026-10-09", "nota": "Último boletim semanal de progresso"}, {"local": "Goiás", "pct": 10.0, "fonte": "Conab", "data": "2026-10-09", "nota": "Perto de 10%, mais adiantado no Sul e Sudoeste"}, {"local": "Paraná e MS", "pct": null, "fonte": "Conab", "data": "2026-10-09", "nota": "Bom ritmo; chuvas pontuais limitaram máquinas em MS"}, {"local": "Santa Catarina", "pct": null, "fonte": "Conab", "data": "2026-10-09", "nota": "Excesso de umidade segue limitando"}, {"local": "MAPITOPA (PA e TO)", "pct": null, "fonte": "Conab", "data": "2026-10-09", "nota": "Plantio incipiente; chuva insuficiente para recarregar o solo"}], "conab": [{"cultura": "Grãos (total)", "producao_mi_t": 367.1, "variacao_pct": 1.4, "area_mi_ha": null}, {"cultura": "Soja", "producao_mi_t": 181.6, "variacao_pct": 0.7, "area_mi_ha": 49.3}, {"cultura": "Milho", "producao_mi_t": 148.0, "variacao_pct": 2.4, "area_mi_ha": null}], "taxas": [{"indicador": "Selic", "valor": 13.75, "unidade": "% a.a.", "referencia": "Próximo Copom: 3 e 4/11", "fonte": "Banco Central"}, {"indicador": "IPCA 12 meses", "valor": 4.58, "unidade": "%", "referencia": "Setembro; teto da meta 4,5%", "fonte": "IBGE"}, {"indicador": "IPCA-15 12 meses (projeção)", "valor": 4.8, "unidade": "%", "referencia": "Divulgação 23/10, 9h (Itaú)", "fonte": "InfoMoney/AVNews"}, {"indicador": "Focus · IPCA 2026", "valor": 5.22, "unidade": "%", "referencia": "Focus de 13/10", "fonte": "Banco Central"}, {"indicador": "Focus · Selic fim de 2026", "valor": 13.25, "unidade": "% a.a.", "referencia": "Focus de 13/10", "fonte": "Banco Central"}, {"indicador": "Focus · Selic fim de 2027", "valor": 12.0, "unidade": "% a.a.", "referencia": "Focus de 13/10", "fonte": "Banco Central"}, {"indicador": "Focus · Dólar fim de 2026", "valor": 5.15, "unidade": "R$", "referencia": "Focus de 13/10", "fonte": "Banco Central"}, {"indicador": "Focus · PIB 2026", "valor": 1.85, "unidade": "%", "referencia": "Focus de 13/10", "fonte": "Banco Central"}, {"indicador": "Pronamp", "valor": 9.0, "unidade": "% a.a. (até)", "referencia": "Plano Safra 2026/27", "fonte": "MAPA"}, {"indicador": "Custeio empresarial", "valor": 12.5, "unidade": "% a.a.", "referencia": "Plano Safra 2026/27", "fonte": "MAPA"}], "resumo": [{"ordem": 1, "titulo": "Mato Grosso passa da metade do plantio", "texto": "Com a chuva no Centro-Oeste, MT chegou a 51,9% da soja semeada; o Brasil está em 29,5%, acima da média. No Pará e no Tocantins o plantio ainda é incipiente."}, {"ordem": 2, "titulo": "Chicago cai, dólar segura a soja", "texto": "Cinco quedas seguidas em Chicago pela safra recorde dos EUA, compensadas pela alta do dólar; a saca em Paranaguá ficou estável."}, {"ordem": 3, "titulo": "Semana de eleição e IPCA-15", "texto": "PTAX em R$ 5,08 antes do segundo turno; o IPCA-15 de sexta pode levar a inflação em 12 meses para perto de 4,8%."}, {"ordem": 4, "titulo": "Boi no recorde, café em alta", "texto": "Arroba no maior valor nominal desde 1994 e café arábica subindo com estoques baixos e receio do El Niño."}], "agenda": [{"data": "2026-10-23", "evento": "IPCA-15 de outubro (IBGE, 9h)"}, {"data": "2026-10-25", "evento": "Segundo turno das eleições"}, {"data": "2026-11-03", "evento": "Copom (3 e 4/11)"}, {"data": "2026-11-12", "evento": "Conab: 2º levantamento da safra 2026/27 (data a confirmar)"}], "atualizado": "19/10/2026 13:15"};
+const FONTE_DADOS = 'https://raw.githubusercontent.com/Agro30/agro30-dados/main/dados.json';
+function render(DATA) {
+const nf = (v, d) => new Intl.NumberFormat('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v);
+const br = s => { const [y, m, d] = String(s).slice(0, 10).split('-'); return `${d}/${m}/${y}`; };
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const decimals = q => q.unidade === 'R$' ? 4 : 2;
+const chgCls = p => p == null || Math.abs(p) < 0.5 ? 'flat' : p > 0 ? 'up' : 'down';
+const chgTxt = (p, base) => p == null ? '' : `${Math.abs(p) < 0.5 ? '▶' : p > 0 ? '▲' : '▼'} ${p > 0 ? '+' : ''}${nf(p, 1)}% ${base || ''}`.trim();
+
+const quotes = DATA.painel.filter(q => !/Chicago/.test(q.indicador));
+const top = ['Soja', 'Milho', 'Boi gordo', 'Dólar PTAX'];
+document.getElementById('hero-title').textContent = DATA.resumo[0]?.titulo || 'Mercado agro hoje';
+document.getElementById('hero-sub').textContent = DATA.resumo[0]?.texto || '';
+document.getElementById('ref-date').textContent = br(quotes.map(q => q.data).sort().at(-1));
+document.getElementById('upd').textContent = DATA.atualizado;
+
+const board = document.getElementById('board');
+top.map(n => quotes.find(q => q.indicador === n)).filter(Boolean).forEach(q => {
+  const b = el('div', 'quote');
+  b.append(el('span', 'name', q.indicador), el('span', 'where', `${q.praca} · ${q.fonte}`));
+  const v = el('div', 'val num', nf(q.valor, decimals(q))); v.append(el('span', 'unit', q.unidade)); b.append(v);
+  b.append(el('span', 'chg ' + chgCls(q.variacao_pct), chgTxt(q.variacao_pct, q.base)));
+  board.append(b);
+});
+
+const qt = document.getElementById('quotes-table');
+quotes.forEach(q => {
+  const tr = document.createElement('tr');
+  const v = el('td', 'v', `${nf(q.valor, decimals(q))} `); v.append(el('span', 'src', q.unidade));
+  const c = el('td', 'chg ' + chgCls(q.variacao_pct), chgTxt(q.variacao_pct, q.base)); c.style.color = `var(--${chgCls(q.variacao_pct) === 'flat' ? 'muted' : chgCls(q.variacao_pct)})`;
+  tr.append(el('td', null, q.indicador), el('td', null, q.praca), v, c, el('td', 'src', br(q.data)), el('td', 'src', q.fonte));
+  qt.append(tr);
+});
+
+const withPct = DATA.plantio.filter(r => r.pct != null);
+const max = Math.max(60, ...withPct.map(r => r.pct));
+const bars = document.getElementById('bars');
+withPct.forEach(r => {
+  const row = el('div', 'bar-row');
+  const name = el('div', null, r.local); name.append(el('small', null, `${r.fonte} · ${br(r.data)}`));
+  const track = el('div', 'track'); const fill = el('div', 'fill' + (r.local === 'Média histórica' ? ' ref' : '')); fill.style.width = `${r.pct / max * 100}%`; track.append(fill);
+  row.append(name, track, el('div', 'num', `${nf(r.pct, 1)}%`));
+  bars.append(row);
+});
+const regions = document.getElementById('regions');
+DATA.plantio.filter(r => r.nota).forEach(r => {
+  const li = el('li', /MAPITOPA/.test(r.local) ? 'focus' : null);
+  li.append(el('span', 'tag', r.local), el('span', null, r.nota));
+  regions.append(li);
+});
+
+const conab = document.getElementById('conab');
+DATA.conab.forEach(r => {
+  const tr = document.createElement('tr');
+  tr.append(el('td', null, r.cultura), el('td', 'v', `${nf(r.producao_mi_t, 1)} mi t`), el('td', null, r.variacao_pct == null ? '—' : `${r.variacao_pct > 0 ? '+' : ''}${nf(r.variacao_pct, 1)}%`), el('td', null, r.area_mi_ha == null ? '—' : `${nf(r.area_mi_ha, 1)} mi ha`));
+  conab.append(tr);
+});
+
+const rates = document.getElementById('rates');
+DATA.taxas.forEach(t => {
+  const r = el('div', 'rate');
+  r.append(el('span', 'label', t.indicador));
+  const n = el('div', 'num', nf(t.valor, 2)); n.append(el('small', null, t.unidade)); r.append(n);
+  r.append(el('span', 'ref', `${t.referencia} · ${t.fonte}`));
+  rates.append(r);
+});
+
+const months = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+const ag = document.getElementById('agenda-list');
+DATA.agenda.forEach(a => {
+  const li = document.createElement('li');
+  const d = el('div', 'd', String(Number(a.data.slice(8, 10)))); d.append(el('small', null, months.at(Number(a.data.slice(5, 7)) - 1)));
+  li.append(d, el('div', null, a.evento));
+  ag.append(li);
+});
+
+const news = document.getElementById('news');
+DATA.resumo.forEach(n => { const a = el('article'); a.append(el('h3', null, n.titulo), el('p', null, n.texto)); news.append(a); });
+}
+(async () => {
+  let dados = EMBUTIDO;
+  try {
+    const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 4000);
+    const r = await fetch(FONTE_DADOS + '?v=' + Math.floor(Date.now() / 300000), { signal: ctrl.signal, cache: 'no-store' });
+    clearTimeout(t);
+    if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.painel)) dados = j; }
+  } catch (e) {}
+  render(dados);
+})();
+</script>
+
+<script>
+const HIST_EMB = {"fonte":"IBGE, Produção Agrícola Municipal (PAM), tabela 1612; MAPITOPA = soma de MA, TO, PI e PA","ano_e_colheita":"O ano da PAM é o ano da colheita: 2016 corresponde à safra 2015/16.","anos":[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"regioes":["Norte","Nordeste","Sudeste","Sul","Centro-Oeste","MAPITOPA"],"culturas":["Algodão","Arroz","Cana-de-açúcar","Feijão","Mandioca","Milho","Soja","Sorgo","Trigo"],"producao_t":{"Algodão":{"Norte":[14118,9947,23020,8000,12709,19393,6069,64627,72967,71688,88446],"Nordeste":[1338017,954098,922092,1367272,1660829,1639384,1350270,1477728,1647503,1729850,2126140],"Sudeste":[81856,81647,83970,113917,216755,212954,117385,142706,158100,158027,219215],"Sul":[0,0,0,438,481,238,231,23,393,839,360],"Centro-Oeste":[2573335,2418411,2813790,3466498,5002566,5198167,4237737,4649310,5617645,6563202,7485917],"MAPITOPA":[153552,81113,117918,124597,173875,184370,154734,219447,211370,268143,344171]},"Arroz":{"Norte":[977751,925072,1064976,1022610,959471,993612,990146,847580,939007,1166599,1188905],"Nordeste":[494471,271226,433406,394271,306828,335526,373623,335431,356742,359360,332131],"Sudeste":[88062,77490,69641,66915,65792,67433,68249,68059,59116,147740,142144],"Sul":[9924933,8663291,10025997,9629178,8372706,9120281,9644669,9007258,8468002,8387602,10165871],"Centro-Oeste":[815984,685110,870746,695438,663842,574159,583918,515662,462796,610046,830619],"MAPITOPA":[1204015,906539,1232360,1148042,965412,1061184,1050141,903220,1002253,1187346,1103257]},"Cana-de-açúcar":{"Norte":[4371436,4581321,4298922,4374590,4556723,3753741,3648199,4145136,4680260,4459165,5504032],"Nordeste":[61546275,55734909,49915833,49883730,51959459,51653642,54660012,55342045,58574704,58631830,54959173],"Sudeste":[499677593,517437694,525003504,506287629,503600893,515045916,480396829,499854416,527119491,508173862,507538492],"Sul":[48587170,48627578,41854507,41031274,42456383,41023278,38308450,35054832,39216675,35171945,36860450],"Centro-Oeste":[136107803,142212652,137573439,145979551,150897007,144593999,138665786,131656283,152467106,154269608,161254518],"MAPITOPA":[7759367,7139842,7106843,7296520,8035626,7233849,7155242,7635796,8206474,8059256,9031080]},"Feijão":{"Norte":[61530,64563,68565,66184,69601,74263,94624,87819,106554,100754,119817],"Nordeste":[638112,303120,485743,512070,507995,567914,473169,468206,404523,428678,314619],"Sudeste":[760456,843761,777378,746480,809067,820012,777550,721561,809397,741407,651301],"Sul":[960338,806401,930586,854330,836478,803657,819475,926779,866650,1031562,1063812],"Centro-Oeste":[668897,603422,783807,737301,684934,769548,735987,668109,712137,716088,790278],"MAPITOPA":[125900,97814,155013,171771,157022,162514,153285,171200,168840,171160,176620]},"Mandioca":{"Norte":[7787395,7538997,7274268,6423821,6154431,6215196,6268214,6340488,5686902,6001093,6023153],"Nordeste":[5543844,4592496,3439173,3517051,3414742,3635099,3599370,3884381,4077050,4242729,4501104],"Sudeste":[2318444,2282113,1829384,1920804,2218086,2367768,2289171,2291636,2525396,2509899,2573451],"Sul":[5891899,5367121,4772583,4783713,4506021,4599918,4606047,3876241,4487579,4624343,4956387],"Centro-Oeste":[1518122,1255587,1186237,1231774,1299906,1379591,1457854,1433046,1642785,1688482,1907752],"MAPITOPA":[6703523,5799799,5583431,5107287,4766234,4927061,5165590,5278619,4899781,5041982,4962619]},"Milho":{"Norte":[2314968,1887892,2789012,2473479,3051903,3531842,4025171,4904102,6072405,5894398,8025826],"Nordeste":[5864864,3161555,6312607,5833630,6791517,8824331,8228990,9155918,9765342,8222785,9049722],"Sudeste":[11564629,10481710,11976736,11172599,12314873,12239652,10548964,12696067,13221436,10322584,11437039],"Sul":[24417444,21190300,26611170,19892061,25021804,22721718,16925171,20744823,24431479,21844323,28094440],"Centro-Oeste":[41121795,27466857,50221133,42994762,53946312,56672192,48543820,62238988,78459049,68423170,84602971],"MAPITOPA":[3898668,2458174,4784571,4440657,5552688,6701201,6977386,8047867,9377760,7974906,9699851]},"Soja":{"Norte":[4274638,4096882,5055514,5409245,5756548,6549505,7335248,8511678,10162399,10884582,12679742],"Nordeste":[8386412,5145197,9497022,11534301,10516092,11588170,12809057,13592097,15025296,15582966,16631842],"Sudeste":[5930317,7540290,8610377,8848413,8645278,10106307,11169383,12118865,13427744,11370780,13921359],"Sul":[34929965,35471797,40373389,38912491,37116995,34403141,41950038,24984201,37198706,39670808,38098961],"Centro-Oeste":[43943604,44140654,51195799,53208000,52281916,59149426,61204442,62083262,76330093,66964632,83927110],"MAPITOPA":[7313273,5114141,8394205,9465361,9572885,10499203,11664634,12975202,14707999,15980364,17467947]},"Sorgo":{"Norte":[43170,58378,39887,53555,86884,101131,130757,176175,204373,237486,336405],"Nordeste":[180751,91034,252969,193826,195585,193070,177132,228995,290397,257109,404867],"Sudeste":[592394,427755,833680,898683,1070969,1048804,798696,966909,1769756,1551002,1944651],"Sul":[17777,17718,12280,13183,12159,14022,11664,53662,159373,24531,25487],"Centro-Oeste":[1302358,559571,1084811,1122069,1306648,1407747,1388581,1507252,2077550,2023506,2692734],"MAPITOPA":[87394,78760,195839,135924,171576,159241,173099,274458,340928,362752,579406]},"Trigo":{"Norte":[0,0,0,0,0,0,0,0,0,0,0],"Nordeste":[3000,19800,12976,26850,14600,17027,17737,16533,26222,28923,33660],"Sudeste":[565969,580443,580858,499917,615703,729444,642675,818723,922857,815395,1040033],"Sul":[4853936,6120603,3647362,4828920,4842569,5402126,7101708,9349922,6515108,6479912,6563074],"Centro-Oeste":[85546,113575,101616,113549,117943,195482,116293,157808,266001,197621,250842],"MAPITOPA":[0,0,0,0,0,0,0,0,0,0,0]}},"area_ha":{"Algodão":{"Norte":[4303,5230,6120,2000,3859,5725,1521,15535,17802,18611,24335],"Nordeste":[369364,307273,226870,299339,378614,365011,316656,348902,361771,399559,478512],"Sudeste":[23045,24562,23293,28083,56063,51768,31940,36034,38518,38864,51728],"Sul":[0,0,0,154,302,141,97,48,147,249,168],"Centro-Oeste":[637044,665237,671846,820450,1188607,1210593,1019549,1249105,1291367,1533168,1597844],"MAPITOPA":[39046,30429,31534,31711,47109,50662,37150,46648,51169,65310,81831]},"Arroz":{"Norte":[247328,244622,233029,217231,222157,228693,227033,208353,198735,227104,254259],"Nordeste":[356776,266618,242455,212573,154127,161289,172259,160807,154572,139955,136041],"Sudeste":[24317,18869,14845,15723,14959,14217,13914,14681,13384,27619,31844],"Sul":[1304231,1261722,1277100,1235134,1149079,1121240,1118658,1129388,1009121,1072479,1134629],"Centro-Oeste":[229526,212812,243343,195665,186886,154496,158663,143179,125114,167285,208219],"MAPITOPA":[516268,428035,403514,357829,299608,317287,322706,297001,282547,286933,297171]},"Cana-de-açúcar":{"Norte":[59920,63259,60293,59521,61741,51804,58869,53624,60371,60829,76576],"Nordeste":[1047500,1000198,941363,894449,887856,888948,923907,925905,919814,911660,904851],"Sudeste":[6650787,6626876,6698849,6544090,6583424,6617121,6565834,6592568,6660461,6672223,6716458],"Sul":[653913,682359,668473,633197,615609,590330,585962,538086,535936,517003,521151],"Centro-Oeste":[1767707,1870011,1864280,1914387,1972043,1859847,1855572,1794130,1878622,1921093,2021342],"MAPITOPA":[112403,112220,110667,112691,117442,109032,116401,113177,117168,117660,135218]},"Feijão":{"Norte":[81102,80752,81557,72071,82728,89558,104745,98945,90904,103321,121480],"Nordeste":[1629943,1456387,1542591,1477697,1347107,1359754,1296594,1313314,1275421,1235763,1154673],"Sudeste":[457635,464567,415657,402908,434632,425673,404720,386869,392991,388995,350522],"Sul":[566392,521440,583860,541972,545602,499940,550081,605445,528350,659359,631721],"Centro-Oeste":[395053,426957,451573,454846,356971,394960,410136,328937,314042,351919,392052],"MAPITOPA":[343292,339829,360409,350474,307493,315321,318591,328199,314442,318803,323481]},"Mandioca":{"Norte":[483839,474642,475710,428793,432907,434912,433824,428273,392115,412566,413098],"Nordeste":[592872,525858,415175,403656,386185,392088,384317,392613,406339,421326,459720],"Sudeste":[129391,126591,101169,104690,118858,124670,123952,120027,130798,135852,133218],"Sul":[247888,233340,220796,228016,209254,211727,207209,184157,195273,195530,198848],"Centro-Oeste":[82171,68764,65259,67469,70836,70960,74388,74593,83792,82641,88962],"MAPITOPA":[535648,475333,446100,396852,386364,387752,399074,388231,364804,377711,375744]},"Milho":{"Norte":[622359,573646,756120,674309,786344,932408,1052300,1211328,1429179,1362353,1806383],"Nordeste":[2690008,2459302,2648706,2610973,2520553,2581818,2727203,2934118,3023581,2753162,2802226],"Sudeste":[2110908,2101896,1984439,1927959,1984790,1964490,1890996,2165005,2076130,1881183,1848441],"Sul":[3698680,3684934,4031787,3443828,3739521,3790673,3975914,4194284,3955317,3931768,4095762],"Centro-Oeste":[6726602,7231309,8318631,7891159,8743327,9087031,9901546,10805714,12062575,11472771,11950208],"MAPITOPA":[1256972,1177566,1435746,1337952,1395290,1561012,1701697,1927820,2149378,1887206,2247861]},"Soja":{"Norte":[1435877,1565306,1660550,1813890,1891162,2074388,2355119,2617967,3084800,3432655,3629329],"Nordeste":[2870256,2883759,3096975,3242128,3332625,3343027,3560595,3753375,4070165,4361450,4534442],"Sudeste":[2120722,2321063,2489328,2482634,2708282,2828667,3134688,3275074,3576403,3664535,3751978],"Sul":[11112942,11579587,11447141,11760681,11927895,12195509,12317783,12825384,13181132,13296454,13465223],"Centro-Oeste":[14666590,14989590,15310367,15539018,16084130,16763371,17680650,18825863,20511483,21453704,22255984],"MAPITOPA":[2596930,2626296,2855211,3093903,3226687,3324544,3723186,3979459,4474621,5005662,5201930]},"Sorgo":{"Norte":[15914,31308,18634,27193,47312,49396,59390,77347,88314,111421,134651],"Nordeste":[148682,82860,178842,181754,107037,102153,96666,121162,142414,122698,160000],"Sudeste":[184754,200877,226072,247434,300484,283586,288086,330317,465540,497658,505017],"Sul":[6147,5089,4116,4925,4203,4859,5297,16963,52106,9441,8723],"Centro-Oeste":[385125,300894,329013,339844,359965,441205,452929,509754,597051,640873,761534],"MAPITOPA":[40227,43141,128338,146932,88415,79518,80614,122492,150970,164460,214110]},"Trigo":{"Norte":[0,0,0,0,0,0,0,0,0,0,0],"Nordeste":[500,3300,3229,4475,3000,3005,3050,3000,5040,5522,6086],"Sudeste":[183466,185005,187138,181349,214155,237524,230534,261917,301636,286311,315632],"Sul":[2278070,1945184,1687251,1864265,1845095,2129440,2485507,2853679,2957318,2554332,2121723],"Centro-Oeste":[28079,34050,34511,40041,57399,63149,56953,49005,82500,87098,72073],"MAPITOPA":[0,0,0,0,0,0,0,0,0,0,0]}},"clima":{"fonte_oni":"NOAA/CPC, Oceanic Niño Index (ONI), trimestre novembro-janeiro da safra","oni_safra":[{"colheita":2015,"safra":"2014/15","oni":0.8},{"colheita":2016,"safra":"2015/16","oni":2.59},{"colheita":2017,"safra":"2016/17","oni":-0.37},{"colheita":2018,"safra":"2017/18","oni":-0.76},{"colheita":2019,"safra":"2018/19","oni":1.05},{"colheita":2020,"safra":"2019/20","oni":0.75},{"colheita":2021,"safra":"2020/21","oni":-1.06},{"colheita":2022,"safra":"2021/22","oni":-0.83},{"colheita":2023,"safra":"2022/23","oni":-0.7},{"colheita":2024,"safra":"2023/24","oni":1.99},{"colheita":2025,"safra":"2024/25","oni":-0.43}],"oni_2026":[{"tri":"DJF","v":-0.39},{"tri":"JFM","v":-0.21},{"tri":"FMA","v":0.11},{"tri":"MAM","v":0.46},{"tri":"AMJ","v":0.95},{"tri":"MJJ","v":1.39},{"tri":"JJA","v":1.8},{"tri":"JAS","v":2.16}],"desvio_produtividade":{"fonte":"Boletim Agro & Macro nº 3: desvio médio da produtividade em relação à tendência, 2000 a 2025, IBGE/PAM e NOAA","soja":{"Sul":[3.1,-1.1],"Sudeste":[-2.1,2.3],"Centro-Oeste":[-2.0,1.9],"Nordeste":[-3.4,5.4],"Norte":[-1.8,1.1]},"milho":{"Sul":[4.7,-4.9],"Sudeste":[0.6,-1.1],"Centro-Oeste":[-2.8,-0.4],"Nordeste":[-6.0,5.1],"Norte":[0.2,-0.2]},"ordem":["El Niño","La Niña"]},"prospeccao":{"atualizado":"Outubro de 2026","fonte":"NOAA/CPC, atualização de outubro de 2026; Conab, progresso de 9/10/2026","pontos":["Pacífico central 2,1 °C acima do normal em setembro; o trimestre JAS fechou com ONI de 2,16.","100% de chance de El Niño muito forte até novembro e 83% de chance de ser o mais forte desde 1950 entre outubro e dezembro.","Em 2015/16, o último El Niño muito forte, a produção de soja do Nordeste caiu 39%, de 8,4 para 5,1 milhões de toneladas (IBGE).","No MAPITOPA, plantio ainda incipiente e chuva insuficiente para recarregar o solo; o risco é de irregularidade e veranicos entre novembro e fevereiro.","No Sul, a tendência é de chuva acima da média e maior pressão de doenças."],"recomendacoes":["Plantar só com umidade no perfil e seguir o ZARC.","Escalonar a semeadura e diversificar ciclos.","Contratar seguro ou Proagro antes de semear.","Monitorar doenças desde a emergência no Sul."],"proxima_atualizacao":"NOAA, novembro de 2026"}}};
+const HIST_URL = 'https://raw.githubusercontent.com/Agro30/agro30-dados/main/historico.json';
+const SERIES = ['--s1', '--s2', '--s3', '--s4', '--s5', '--s6'];
+const fmtN = (v, d = 0) => new Intl.NumberFormat('pt-BR', { maximumFractionDigits: d, minimumFractionDigits: d }).format(v);
+const compact = v => v >= 1e6 ? `${fmtN(v / 1e6, 1)} mi` : v >= 1e3 ? `${fmtN(v / 1e3, 0)} mil` : fmtN(v, 0);
+const mk = (tag, attrs = {}, text) => { const e = document.createElementNS('http://www.w3.org/2000/svg', tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
+const el2 = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+function lineChart(box, xs, series, fmt) {
+  box.replaceChildren();
+  const W = Math.max(320, box.clientWidth || 640), H = 300, L = 64, R = 16, T = 12, B = 28;
+  const all = series.flatMap(s => s.v).filter(v => v != null);
+  const max = Math.max(1, ...all) * 1.08;
+  const x = i => L + i * (W - L - R) / (xs.length - 1), y = v => T + (1 - v / max) * (H - T - B);
+  const svg = mk('svg', { viewBox: `0 0 ${W} ${H}`, class: 'chart', role: 'img', 'aria-label': 'Gráfico de linhas por região' });
+  for (let k = 0; k <= 4; k++) { const v = max * k / 4; svg.append(mk('line', { x1: L, x2: W - R, y1: y(v), y2: y(v), class: 'grid' }), mk('text', { x: L - 8, y: y(v) + 4, 'text-anchor': 'end' }, fmt(v))); }
+  const step = W < 480 ? 2 : 1;
+  xs.forEach((a, i) => { if (i % step === 0 || i === xs.length - 1) svg.append(mk('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }, String(a))); });
+  series.forEach(s => {
+    const pts = s.v.map((v, i) => v == null ? null : [x(i), y(v)]).filter(Boolean);
+    if (!pts.length) return;
+    svg.append(mk('path', { d: 'M' + pts.map(p => p.join(',')).join('L'), fill: 'none', stroke: `var(${s.c})`, 'stroke-width': s.focus ? 3 : 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: s.focus ? 1 : 0.85 }));
+    const last = pts.at(-1); svg.append(mk('circle', { cx: last[0], cy: last[1], r: s.focus ? 4 : 3, fill: `var(${s.c})` }));
+  });
+  box.append(svg);
+}
+
+function barChart(box, labels, vals, color, opts = {}) {
+  box.replaceChildren();
+  const W = Math.max(300, box.clientWidth || 520), H = 260, L = 40, R = 10, T = 14, B = 34;
+  const lo = Math.min(-1, ...vals) * 1.15, hi = Math.max(1, ...vals) * 1.15;
+  const y = v => T + (hi - v) / (hi - lo) * (H - T - B);
+  const bw = (W - L - R) / labels.length;
+  const svg = mk('svg', { viewBox: `0 0 ${W} ${H}`, class: 'chart', role: 'img', 'aria-label': opts.label || 'Gráfico de barras' });
+  [-2, -1, 0, 1, 2].filter(v => v >= lo && v <= hi).forEach(v => svg.append(mk('line', { x1: L, x2: W - R, y1: y(v), y2: y(v), class: v === 0 ? 'zero' : 'grid' }), mk('text', { x: L - 6, y: y(v) + 4, 'text-anchor': 'end' }, (v > 0 ? '+' : '') + fmtN(v, 0))));
+  [0.5, -0.5].forEach(v => svg.append(mk('line', { x1: L, x2: W - R, y1: y(v), y2: y(v), stroke: 'var(--muted)', 'stroke-dasharray': '3 4', 'stroke-width': 1, opacity: .6 })));
+  labels.forEach((lab, i) => {
+    const v = vals[i], x0 = L + i * bw + bw * 0.18, w = bw * 0.64;
+    svg.append(mk('rect', { x: x0, y: Math.min(y(v), y(0)), width: w, height: Math.max(1, Math.abs(y(v) - y(0))), rx: 3, fill: color(v) }));
+    if (bw > 26) svg.append(mk('text', { x: x0 + w / 2, y: v >= 0 ? y(v) - 4 : y(v) + 13, 'text-anchor': 'middle', style: 'font-size:11px' }, fmtN(v, 1)));
+    if (i % (bw < 34 ? 2 : 1) === 0 || i === labels.length - 1) svg.append(mk('text', { x: x0 + w / 2, y: H - 10, 'text-anchor': 'middle' }, lab));
+  });
+  box.append(svg);
+}
+
+const ensoClass = v => v >= 0.5 ? 'nino' : v <= -0.5 ? 'nina' : 'neutro';
+const ensoColor = v => `var(--${ensoClass(v)})`;
+
+function renderHist(H) {
+  const state = { cultura: 'Soja', metrica: 'producao' };
+  const METRICAS = { producao: 'Produção', area: 'Área colhida', rend: 'Produtividade' };
+  const cBox = document.getElementById('prod-cultura'), mBox = document.getElementById('prod-metrica');
+  const chips = (box, items, key) => { box.replaceChildren(...items.map(([v, t]) => { const b = el2('button', 'chip', t); b.type = 'button'; b.setAttribute('aria-pressed', String(state[key] === v)); b.addEventListener('click', () => { state[key] = v; draw(); }); return b; })); };
+  const val = (c, r, i) => { const p = H.producao_t[c][r][i], a = H.area_ha[c][r][i]; if (state.metrica === 'producao') return p || null; if (state.metrica === 'area') return a || null; return a ? p / a * (c === 'Cana-de-açúcar' || c === 'Mandioca' ? 1 : 1000 / 60) : null; };
+  const unit = c => state.metrica === 'producao' ? 't' : state.metrica === 'area' ? 'ha' : (c === 'Cana-de-açúcar' || c === 'Mandioca' ? 't/ha' : 'sc/ha');
+  function draw() {
+    chips(cBox, H.culturas.map(c => [c, c]), 'cultura');
+    chips(mBox, Object.entries(METRICAS), 'metrica');
+    const c = state.cultura, u = unit(c);
+    document.getElementById('prod-titulo').textContent = `${c}: ${METRICAS[state.metrica].toLowerCase()} por região (${u})`;
+    document.getElementById('prod-nota').textContent = state.metrica === 'rend' ? (u === 'sc/ha' ? 'Produção dividida pela área colhida, em sacas de 60 kg por hectare.' : 'Produção dividida pela área colhida, em toneladas por hectare.') : 'Total de cada região no ano.';
+    const series = H.regioes.map((r, k) => ({ name: r, c: SERIES[k], focus: r === 'MAPITOPA', v: H.anos.map((_, i) => val(c, r, i)) })).filter(s => s.v.some(v => v));
+    lineChart(document.getElementById('prod-chart'), H.anos, series, v => state.metrica === 'rend' ? fmtN(v, 0) : compact(v));
+    const lg = document.getElementById('prod-legenda');
+    lg.replaceChildren(...series.map(s => { const sp = el2('span', s.focus ? 'focus' : null, s.name); sp.style.setProperty('--c', `var(${s.c})`); return sp; }));
+    const n = H.anos.length - 1;
+    document.getElementById('tab-titulo').textContent = `${c} em ${H.anos[n]}`;
+    const tb = document.getElementById('prod-tabela');
+    tb.replaceChildren(...H.regioes.filter(r => H.producao_t[c][r][n] > 0).map(r => {
+      const p = H.producao_t[c][r][n], a = H.area_ha[c][r][n], p0 = H.producao_t[c][r][n - 1];
+      const rend = a ? p / a * (u === 'sc/ha' || unit(c) === 'sc/ha' ? 1000 / 60 : 1) : null;
+      const isSc = !(c === 'Cana-de-açúcar' || c === 'Mandioca');
+      const ch = p0 ? (p / p0 - 1) * 100 : null;
+      const tr = document.createElement('tr');
+      const d = el2('td', ch == null ? null : ch >= 0 ? 'pos' : 'neg', ch == null ? '—' : `${ch >= 0 ? '+' : ''}${fmtN(ch, 1)}%`);
+      tr.append(el2('td', null, r), el2('td', 'v', `${compact(p)} t`), el2('td', null, `${compact(a)} ha`), el2('td', null, a ? (isSc ? `${fmtN(p / a * 1000 / 60, 1)} sc/ha` : `${fmtN(p / a, 1)} t/ha`) : '—'), d);
+      return tr;
+    }));
+  }
+  draw();
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(draw, 200); });
+
+  const C = H.clima;
+  const drawClima = () => {
+    barChart(document.getElementById('oni-chart'), C.oni_safra.map(o => o.safra.slice(2, 5) + o.safra.slice(7)), C.oni_safra.map(o => o.oni), ensoColor, { label: 'ONI por safra' });
+    barChart(document.getElementById('oni26-chart'), C.oni_2026.map(o => o.tri), C.oni_2026.map(o => o.v), ensoColor, { label: 'ONI em 2026' });
+  };
+  drawClima(); addEventListener('resize', () => setTimeout(drawClima, 220));
+  const dv = C.desvio_produtividade, tb = document.getElementById('desvio');
+  const cell = v => el2('td', v >= 0 ? 'pos' : 'neg', `${v > 0 ? '+' : ''}${fmtN(v, 1)}%`);
+  tb.replaceChildren(...Object.keys(dv.soja).map(r => { const tr = document.createElement('tr'); tr.append(el2('td', null, r), cell(dv.soja[r][0]), cell(dv.soja[r][1]), cell(dv.milho[r][0]), cell(dv.milho[r][1])); return tr; }));
+  const P = C.prospeccao;
+  document.getElementById('prosp-nota').textContent = `Atualizado em ${P.atualizado.toLowerCase()} · próxima atualização: ${P.proxima_atualizacao}`;
+  document.getElementById('prosp').replaceChildren(...P.pontos.map(t => el2('li', null, t)));
+  document.getElementById('prosp-rec').replaceChildren(...P.recomendacoes.map(t => el2('li', null, t)));
+  document.getElementById('prosp-fonte').textContent = `Fonte: ${P.fonte}.`;
+}
+
+(async () => {
+  let h = HIST_EMB;
+  try { const r = await fetch(HIST_URL + '?v=' + Math.floor(Date.now() / 3600000), { cache: 'no-store' }); if (r.ok) { const j = await r.json(); if (j && j.producao_t) h = j; } } catch (e) {}
+  renderHist(h);
+})();
+</script>
+
+
+</body>
+</html>
