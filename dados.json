@@ -3,71 +3,71 @@
   {
    "indicador": "Soja",
    "praca": "Paranaguá",
-   "valor": 154.61,
+   "valor": 153.4,
    "unidade": "R$/sc",
-   "variacao_pct": 0.2,
-   "base": "vs 14/10",
-   "data": "2026-10-16",
+   "variacao_pct": -0.5,
+   "base": "vs 19/10",
+   "data": "2026-10-20",
    "fonte": "Cepea/ESALQ"
   },
   {
    "indicador": "Milho",
    "praca": "Campinas",
-   "valor": 64.85,
+   "valor": 64.74,
    "unidade": "R$/sc",
-   "variacao_pct": -0.9,
-   "base": "vs 14/10",
-   "data": "2026-10-16",
+   "variacao_pct": -0.2,
+   "base": "vs 16/10",
+   "data": "2026-10-19",
    "fonte": "Cepea/ESALQ"
   },
   {
    "indicador": "Algodão",
    "praca": "Cepea",
-   "valor": 134.7,
+   "valor": 134.87,
    "unidade": "R$/@",
-   "variacao_pct": 0.3,
-   "base": "vs 14/10",
-   "data": "2026-10-16",
+   "variacao_pct": 0.1,
+   "base": "vs 16/10",
+   "data": "2026-10-19",
    "fonte": "Cepea/ESALQ"
   },
   {
    "indicador": "Boi gordo",
    "praca": "Cepea/B3",
-   "valor": 380.7,
+   "valor": 380.45,
    "unidade": "R$/@",
-   "variacao_pct": 0.3,
-   "base": "vs 14/10",
-   "data": "2026-10-16",
+   "variacao_pct": -0.1,
+   "base": "vs 19/10",
+   "data": "2026-10-20",
    "fonte": "Cepea/B3"
   },
   {
    "indicador": "Café arábica",
    "praca": "Cepea",
-   "valor": 1601.25,
+   "valor": 1610.14,
    "unidade": "R$/sc",
-   "variacao_pct": 1.9,
-   "base": "vs 14/10",
-   "data": "2026-10-16",
+   "variacao_pct": 0.2,
+   "base": "vs 19/10",
+   "data": "2026-10-20",
    "fonte": "Cepea/ESALQ"
   },
   {
    "indicador": "Dólar PTAX",
    "praca": "venda",
-   "valor": 5.0564,
+   "valor": 5.014,
    "unidade": "R$",
-   "variacao_pct": -0.5,
-   "base": "vs 16/10",
-   "data": "2026-10-19",
+   "variacao_pct": -0.8,
+   "base": "vs 19/10",
+   "data": "2026-10-20",
    "fonte": "Banco Central"
   },
   {
    "indicador": "Soja Chicago",
    "praca": "CBOT nov",
-   "valor": 12.54,
+   "valor": 12.48,
    "unidade": "US$/bu",
-   "variacao_pct": -0.6,
-   "base": "vs 16/10",
-   "data": "2026-10-19",
+   "variacao_pct": -0.5,
+   "base": "vs 19/10",
+   "data": "2026-10-20",
    "fonte": "CBOT via Notícias Agrícolas"
   },
   {
@@ -87,7 +87,7 @@
    "pct": 51.9,
    "fonte": "Imea",
    "data": "2026-10-16",
-   "nota": "+18,6 pontos na semana; Médio-Norte 69,3%, Oeste 61,6%"
+   "nota": "+18,6 pontos na semana; Conab já aponta 60,8% no estado"
   },
   {
    "local": "Brasil (Safras)",
@@ -105,38 +105,38 @@
   },
   {
    "local": "Brasil (Conab)",
-   "pct": 15.6,
+   "pct": 30.1,
    "fonte": "Conab",
-   "data": "2026-10-09",
-   "nota": "Último boletim semanal de progresso"
+   "data": "2026-10-20",
+   "nota": "Quase dobrou na semana (15,6%); 21,4% há um ano e 26,4% na média de 5 anos"
   },
   {
    "local": "Goiás",
-   "pct": 10.0,
+   "pct": 26.0,
    "fonte": "Conab",
-   "data": "2026-10-09",
-   "nota": "Perto de 10%, mais adiantado no Sul e Sudoeste"
+   "data": "2026-10-20",
+   "nota": "Salto de 19 pontos em uma semana"
   },
   {
    "local": "Paraná e MS",
    "pct": null,
    "fonte": "Conab",
-   "data": "2026-10-09",
-   "nota": "Bom ritmo; chuvas pontuais limitaram máquinas em MS"
+   "data": "2026-10-20",
+   "nota": "PR com 39% e MS com 28%; umidade em excesso ainda segura parte de MS"
   },
   {
    "local": "Santa Catarina",
-   "pct": null,
+   "pct": 10.9,
    "fonte": "Conab",
-   "data": "2026-10-09",
-   "nota": "Excesso de umidade segue limitando"
+   "data": "2026-10-20",
+   "nota": "Avanço lento depois de semanas de solo encharcado"
   },
   {
    "local": "MAPITOPA (PA e TO)",
    "pct": null,
    "fonte": "Conab",
-   "data": "2026-10-09",
-   "nota": "Plantio incipiente; chuva insuficiente para recarregar o solo"
+   "data": "2026-10-20",
+   "nota": "Sem número no boletim; semeadura pontual e previsão de tempo mais seco e quente no fim de outubro"
   }
  ],
  "conab": [
@@ -234,23 +234,23 @@
  "resumo": [
   {
    "ordem": 1,
-   "titulo": "Chicago e dólar recuam juntos",
-   "texto": "Soja em Chicago caiu de novo (US$ 12,54/bu, -0,6%) e o milho perdeu 1,5% com o avanço da colheita nos EUA; a PTAX cedeu para R$ 5,06, o que tira sustentação dos preços internos. O Cepea desta segunda ainda não saiu."
+   "titulo": "MAPITOPA segue à espera de chuva firme",
+   "texto": "O Inmet prevê para esta semana só pancadas isoladas no Maranhão e no Piauí e acumulados pontuais de até 40 mm no Tocantins. Com o El Niño forte, a umidade do solo continua curta: o recomendado é escalonar e semear só com chuva consolidada."
   },
   {
    "ordem": 2,
-   "titulo": "Plantio: MT à frente, Sul travado",
-   "texto": "Mato Grosso já semeou mais da metade da soja, enquanto a chuva excessiva quase parou as máquinas no Paraná. No MAPITOPA, Pará e Tocantins seguem com plantio incipiente à espera de umidade no solo."
+   "titulo": "Soja no porto recua para R$ 153,40",
+   "texto": "O indicador Cepea em Paranaguá caiu 0,5% na terça, acompanhando o dólar mais fraco e a soja de novembro em Chicago a US$ 12,48/bu. Boi gordo ficou estável (R$ 380,45/@) e o café arábica subiu 0,2%."
   },
   {
    "ordem": 3,
-   "titulo": "El Niño forte no radar",
-   "texto": "O painel do Inmet e órgãos federais vê alta chance de El Niño muito forte até dezembro: menos chuva e calor no centro-norte e no MAPITOPA, excesso de água no Sul. Vale escalonar a semeadura onde o solo ainda está seco."
+   "titulo": "Plantio adiantado, mas Sul terá chuva forte",
+   "texto": "O Brasil está com 30,1% da soja semeada pela Conab, acima da média de 26,4%. Para o PR, SC e norte do RS, o Inmet indica de 70 a 150 mm em cinco dias a partir de hoje, o que pode travar a semeadura por alguns dias."
   },
   {
    "ordem": 4,
-   "titulo": "Focus estável antes da eleição",
-   "texto": "O Focus manteve IPCA de 2026 em 5,22% e Selic de 13,25% no fim do ano, mas cortou o PIB para 1,83% e o dólar para R$ 5,13. A semana tem IPCA-15 na sexta e segundo turno no domingo."
+   "titulo": "IPCA-15 na sexta e eleição no domingo",
+   "texto": "O IPCA-15 de outubro sai na sexta (23) e o segundo turno é no domingo (25). Com a Selic em 13,75% e Copom em 3 e 4/11, câmbio e juros podem oscilar mais."
   }
  ],
  "agenda": [
@@ -271,9 +271,13 @@
    "evento": "Copom (3 e 4/11)"
   },
   {
+   "data": "2026-11-10",
+   "evento": "USDA: relatório WASDE de novembro"
+  },
+  {
    "data": "2026-11-12",
    "evento": "Conab: 2º levantamento da safra 2026/27 (data a confirmar) · NOAA: boletim do El Niño"
   }
  ],
- "atualizado": "19/10/2026 18:57"
+ "atualizado": "21/10/2026 06:56"
 }
